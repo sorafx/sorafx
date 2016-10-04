@@ -1,0 +1,3 @@
+rootProject.name = "sorafx"
+
+include "sorafx-core", "sorafx-sandbox"

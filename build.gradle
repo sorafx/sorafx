@@ -1,0 +1,58 @@
+buildscript {
+    ext.sorafx_version = "0.1.0-SNAOSHOT"
+    ext.kotlin_version = "1.0.4"
+    ext.undertow_version = "1.4.3.Final"
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+subprojects {
+    apply plugin: "kotlin"
+
+    group = "io.github.sorafx"
+    version = sorafx_version
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    tasks.withType(SourceTask).findAll { it.hasProperty("options") } *.options*.encoding = "UTF-8"
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        // kotlin
+        compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+        compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+
+        // test
+        testCompile "junit:junit:4.+"
+    }
+}
+
+project("sorafx-core") {
+    dependencies {
+        compile "io.undertow:undertow-core:1.4.3.Final"
+    }
+}
+
+project("sorafx-sandbox") {
+    apply plugin: "application"
+
+    mainClassName = "io.github.sorafx.sandbox.MainKt"
+
+    dependencies {
+        compile project(":sorafx-core")
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = "3.1"
+}
