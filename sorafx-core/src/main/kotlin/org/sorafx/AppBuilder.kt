@@ -34,15 +34,4 @@ class AppBuilder() {
         rootChain.next(context)
     }
 
-    fun start(): Unit {
-        val undertow = Undertow.builder().apply {
-            addHttpListener(8080, "localhost")
-            setHandler { exchange ->
-                val context = AppContext(exchange)
-                handle(context)
-            }
-        }.build()
-        undertow.start()
-    }
-
 }
